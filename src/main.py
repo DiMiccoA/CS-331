@@ -17,14 +17,14 @@ def build_state(file):
 	return state
 
 def print_parents(node, outputfd):
-	if node.parent == 0:
-		print_state(node.state)
-		output_to_file(outputfd, node.state)
-		print '- - -'
+	if node is None: #node.get_parent == 0:
+		#print_state(node.get_state())
+		#output_to_file(outputfd, node.get_state())
+		#print '- - -'
 		return
-	print_parents(node.parent,outputfd)
-	print_state(node.state)
-	output_to_file(outputfd, node.state)
+	print_parents(node.get_parent(),outputfd)
+	print_state(node.get_state())
+	output_to_file(outputfd, node.get_state())
 	print '- - -'
 	return
 			
@@ -38,19 +38,20 @@ def output_to_file(output,state):
 	output.write('- - -\n')
 	
 def main(init, final, mode, output):
+	sys.setrecursionlimit(500000)
 	start = ''
 	goal = ''
 	start = build_state(init)
-	goal = build_state(final)	
+	goal = build_state(final)
 	outputfd = open(output, 'w')
 	
 	if mode == 'bfs':
 		print_parents(bfs.breadth_first(start, goal), outputfd)
-	if mode == 'dfs':
+	elif mode == 'dfs':
 		pass
-	if mode == 'iddfs':
+	elif mode == 'iddfs':
 		pass
-	if mode == 'astar':
+	elif mode == 'astar':
 		pass
 	outputfd.close()
 

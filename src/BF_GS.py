@@ -8,7 +8,7 @@ from node import Node
 
 def expand(parent):
 	#Given a parent node, find valid moves and returns an array of nodes
-	index = parent.state.index('0')
+	index = parent.get_state().index('0')
 	expansions = []
 	
 	#Create possible moves that can happen
@@ -18,13 +18,13 @@ def expand(parent):
 	right = index+1
 
 	if up >= 0:
-		expansions.append(Node(parent, swap(parent.state, up, index)))
+		expansions.append(Node(parent, swap(parent.get_state(), up, index)))
 	if index%3+1 <= 2:
-		expansions.append(Node(parent, swap(parent.state, right, index)))
+		expansions.append(Node(parent, swap(parent.get_state(), right, index)))
 	if down < 9:
-		expansions.append(Node(parent, swap(parent.state, down, index)))
+		expansions.append(Node(parent, swap(parent.get_state(), down, index)))
 	if index%3-1 >= 0:
-		expansions.append(Node(parent, swap(parent.state, left, index)))
+		expansions.append(Node(parent, swap(parent.get_state(), left, index)))
 
 	return expansions
 	
@@ -40,16 +40,16 @@ def swap(str, a, b):
 def breadth_first(start, goal):
 	count = 0
 	closed = []
-	fringe = [Node(0, start)]
+	fringe = [Node(None, start)]
 	while fringe != []:
 		temp = fringe.pop()
-		if temp.state == goal:
+		if temp.get_state() == goal:
 			print "Number of nodes expanded was: ", count, "\n"
 			return temp
-		if temp.state in closed:
+		if temp.get_state() in closed:
 			continue
 		else:
-			closed.append(temp.state)
+			closed.append(temp.get_state())
 			expansions = expand(temp)
 			map(fringe.append, expansions)
 			count += 1
