@@ -19,12 +19,13 @@ def expand(parent):
 
 	if up >= 0:
 		expansions.append(Node(parent, swap(parent.state, up, index)))
+	if index%3+1 <= 2:
+		expansions.append(Node(parent, swap(parent.state, right, index)))
 	if down < 9:
 		expansions.append(Node(parent, swap(parent.state, down, index)))
 	if index%3-1 >= 0:
 		expansions.append(Node(parent, swap(parent.state, left, index)))
-	if index%3+1 <= 2:
-		expansions.append(Node(parent, swap(parent.state, right, index)))
+
 	return expansions
 	
 def swap(str, a, b):
@@ -39,7 +40,7 @@ def swap(str, a, b):
 def breadth_first(start, goal):
 	count = 0
 	closed = []
-	fringe = [Node(None, start)]
+	fringe = [Node(0, start)]
 	while fringe != []:
 		temp = fringe.pop()
 		if temp.state == goal:
