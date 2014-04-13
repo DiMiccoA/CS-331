@@ -3,6 +3,7 @@ Created on Apr 12, 2014
 
 @author: anton_000
 '''
+import sys
 import BF_GS as bfs
 from node import Node
 
@@ -27,7 +28,18 @@ def print_double_array(arr):
 	for element in arr:
 		for row in element:
 			print('\t'.join(row))
+
+def print_parents(node):
+	if node.parent == None:
+		print_state(node.state)
+		print '- - -'
+		return
+	print_parents(node.parent)
+	print_state(node.state)
+	print '- - -'
+	return
 	
+			
 def print_state(state):
 	for x in range(0,3):
 		print state[x*3]+' '+state[x*3+1]+' '+state[x*3+2]+'\n'
@@ -35,20 +47,11 @@ def print_state(state):
 def main():
 	start = ''
 	goal = ''
-	start = build_state('testStart1.txt')
-	print_state(start)
-	goal = build_state('testGoal1.txt')
-	print '\n'
-	print_state(goal)
+	start = build_state('testStart2.txt')
+	goal = build_state('testGoal2.txt')
 
-#	start = []
-#	goal = []
-#	start.append(build_array('testStart1.txt'))
-#	goal.append(build_array('testGoal1.txt'))
-#	print 'start config:'
-#	print_double_array(start)
-#	print '\ngoal config:'
-#	print_double_array(goal)
+	print_parents(bfs.breadth_first(start, goal))
+
    
 if __name__ == '__main__':
 	main()
