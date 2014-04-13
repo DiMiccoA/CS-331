@@ -3,6 +3,8 @@ Created on Apr 12, 2014
 
 @author: anton_000
 '''
+import BF_GS as bfs
+from node import Node
 
 def build_state(file):
 	#Builds a 2D array given a file
