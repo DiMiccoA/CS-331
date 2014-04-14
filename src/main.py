@@ -10,6 +10,7 @@
 
 import sys
 import BF_GS as bfs
+import DF_GS as dfs
 from node import Node
 
 def build_state(file):
@@ -55,7 +56,7 @@ def main(init, final, mode, output):
 	if mode == 'bfs':
 		print_parents(bfs.breadth_first(start, goal), outputfd)
 	elif mode == 'dfs':
-		pass
+		print_parents(dfs.depth_first(start, goal), outputfd)
 	elif mode == 'iddfs':
 		pass
 	elif mode == 'astar':
