@@ -1,8 +1,8 @@
-"""
-Node
-Created by: Antonio DiMicco and Patrick Oliver
-Class: CS331
-"""
+'''
+'Node
+'Created by: Antonio DiMicco and Patrick Oliver
+'Assignment #1
+'''
 
 class Node:
 	"""Creates a Node that has the parent and state"""

@@ -1,8 +1,9 @@
-'''
-Created on Apr 12, 2014
-
-@author: anton_000
-'''
+#########################################################################
+#Breadth First Search																	#
+#Created by: Antonio DiMicco and Patrick Oliver							#
+#Assignment #1															#
+#Works and tested with Python 2.6.6										#
+#########################################################################
 
 from node import Node
 
@@ -39,7 +40,7 @@ def swap(str, a, b):
 	
 def breadth_first(start, goal):
 	count = 0
-	closed = []
+	closed = dict()
 	fringe = [Node(None, start)]
 	while fringe != []:
 		temp = fringe.pop()
@@ -49,7 +50,7 @@ def breadth_first(start, goal):
 		if temp.get_state() in closed:
 			continue
 		else:
-			closed.append(temp.get_state())
+			closed[temp.get_state()] = True
 			expansions = expand(temp)
 			map(fringe.append, expansions)
 			count += 1
