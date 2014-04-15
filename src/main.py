@@ -24,16 +24,13 @@ def build_state(file):
 
 def print_parents(node, outputfd):
 	states = []
-	count = 0
 	while node is not None:
 		states.append(node.get_state())
 		node = node.get_parent()
-	count = len(states)-1
 	
 	for state in reversed(states):
 		print_state(state)
 		output_to_file(outputfd, state)
-	print '\nNumber of nodes expanded: ',count,'\n'
 	
 			
 def print_state(state):

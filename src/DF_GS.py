@@ -1,5 +1,5 @@
 #########################################################################
-#Breadth First Search																	#
+#Breadth First Search													#
 #Created by: Antonio DiMicco and Patrick Oliver							#
 #Assignment #1															#
 #Works and tested with Python 2.6.6										#
@@ -19,13 +19,13 @@ def expand(parent):
 	right = index+1
 
 	if up >= 0:
-		expansions.append(Node(parent, swap(parent.get_state(), up, index)))
+		expansions.append(Node(parent, swap(parent.get_state(), up, index), None))
 	if index%3+1 <= 2:
-		expansions.append(Node(parent, swap(parent.get_state(), right, index)))
+		expansions.append(Node(parent, swap(parent.get_state(), right, index), None))
 	if down < 9:
-		expansions.append(Node(parent, swap(parent.get_state(), down, index)))
+		expansions.append(Node(parent, swap(parent.get_state(), down, index), None))
 	if index%3-1 >= 0:
-		expansions.append(Node(parent, swap(parent.get_state(), left, index)))
+		expansions.append(Node(parent, swap(parent.get_state(), left, index), None))
 
 	return expansions
 	
@@ -41,16 +41,16 @@ def swap(str, a, b):
 def depth_first(start, goal):
 	count = 0
 	closed = dict()
-	fringe = [Node(None, start)]
+	fringe = [Node(None, start, None)]
 	while fringe != []:
 		temp = fringe.pop(-1)
 		if temp.get_state() == goal:
-			print "Number of nodes expanded was: ", count, "\n"
+			print "Number of nodes expanded was: ", len(closed), "\n"
 			return temp
 		if temp.get_state() in closed:
 			continue
 		else:
 			closed[temp.get_state()] = True
 			expansions = expand(temp)
-			map(fringe.append, expansions)
+			fringe.extend(expansions)
 			count += 1
