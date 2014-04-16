@@ -12,6 +12,7 @@ import sys
 import BF_GS as bfs
 import DF_GS as dfs
 import IDDF_GS as iddfs
+import ASTAR as astar
 from node import Node
 
 def build_state(file):
@@ -58,7 +59,7 @@ def main(init, final, mode, output):
 	elif mode == 'iddfs':
 		print_parents(iddfs.iterative_depth_first(start, goal), outputfd)
 	elif mode == 'astar':
-		pass
+		print_parents(astar.astar(start, goal), outputfd)
 	outputfd.close()
 
 if __name__ == '__main__':

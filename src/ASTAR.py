@@ -47,32 +47,33 @@ def swap(str, a, b):
 def h(state, goal):
 		sum = 0
 		for current_state_index in range(0, len(state)):
-			final_state_index = goal.find(box)
+			final_state_index = goal.find(goal[current_state_index])
 			sum += (abs(current_state_index%3 - final_state_index) + 
 						abs(current_state_index - final_state_index))
-		return h
+		return sum
 			
 def astar(start, goal):
 	depth = 0
 	count = 0
 	closed = dict()
-	fringe = [Node(None, start, 0)]
+	fringe = [Node(None, start, 0, 0+h(start, goal))]
 	temp = None
-	while True:
-		while fringe != []:
-			temp = fringe.pop(0)
-			if temp.get_state() == goal:
-				print "Number of nodes expanded was: ", count, "\n"
-				return temp
-			if temp.get_state() in closed:
-				if closed[temp.get_state()] < temp.get_f_n():
-					continue
-				else:
-					closed[temp.get_state()] = temp.get_f_n()
+	while fringe != []:
+		temp = fringe.pop(0)
+		if temp.get_state() == goal:
+			print "Number of nodes expanded was: ", count, "\n"
+			return temp
+		if temp.get_state() in closed:
+			if closed[temp.get_state()] < temp.get_f_n():
+				continue
 			else:
-				expansions = expand(temp, goal)
-				fringe.extend(expansions)
+				fringe.extend(expand(temp, goal))
+				fringe.sort(key = lambda node: node.f_n)
 				closed[temp.get_state()] = temp.get_f_n()
-				count += 1
-		depth += 1
-		fringe.append(temp.get_parent())
+				count+=1
+		else:
+			expansions = expand(temp, goal)
+			fringe.extend(expansions)
+			fringe.sort(key = lambda node: node.f_n)
+			closed[temp.get_state()] = temp.get_f_n()
+			count += 1
