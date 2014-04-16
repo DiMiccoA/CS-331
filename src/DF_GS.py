@@ -19,13 +19,13 @@ def expand(parent):
 	right = index+1
 
 	if up >= 0:
-		expansions.append(Node(parent, swap(parent.get_state(), up, index), None))
+		expansions.append(Node(parent, swap(parent.get_state(), up, index), None, None))
 	if index%3+1 <= 2:
-		expansions.append(Node(parent, swap(parent.get_state(), right, index), None))
+		expansions.append(Node(parent, swap(parent.get_state(), right, index), None, None))
 	if down < 9:
-		expansions.append(Node(parent, swap(parent.get_state(), down, index), None))
+		expansions.append(Node(parent, swap(parent.get_state(), down, index), None, None))
 	if index%3-1 >= 0:
-		expansions.append(Node(parent, swap(parent.get_state(), left, index), None))
+		expansions.append(Node(parent, swap(parent.get_state(), left, index), None, None))
 
 	return expansions
 	
@@ -41,7 +41,7 @@ def swap(str, a, b):
 def depth_first(start, goal):
 	count = 0
 	closed = dict()
-	fringe = [Node(None, start, None)]
+	fringe = [Node(None, start, None, None)]
 	while fringe != []:
 		temp = fringe.pop(-1)
 		if temp.get_state() == goal:

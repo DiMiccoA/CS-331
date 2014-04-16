@@ -8,7 +8,7 @@
 import gc
 from node import Node
 
-def expand(parent, limit):
+def expand(parent, goal):
 	#Given a parent node, find valid moves and returns an array of nodes
 	index = parent.get_state().index('0')
 	expansions = []
@@ -18,19 +18,20 @@ def expand(parent, limit):
 	down = index+3
 	left = index-1
 	right = index+1
-
+	
+	current_depth = parent.get_depth()+1
 	if up >= 0:
 		expansions.append(Node(parent, swap(parent.get_state(), up, index), 
-							parent.get_depth()+1, None))
+					current_depth, current_depth+h(parent.get_state(),goal)))
 	if index%3+1 <= 2:
 		expansions.append(Node(parent, swap(parent.get_state(), right, index), 
-							parent.get_depth()+1, None))
+					current_depth, current_depth+h(parent.get_state(),goal)))
 	if down < 9:
 		expansions.append(Node(parent, swap(parent.get_state(), down, index), 
-							parent.get_depth()+1, None))
+					current_depth, current_depth+h(parent.get_state(),goal)))
 	if index%3-1 >= 0:
 		expansions.append(Node(parent, swap(parent.get_state(), left, index), 
-							parent.get_depth()+1, None))
+					current_depth, current_depth+h(parent.get_state(),goal)))
 
 	return expansions
 	
@@ -42,28 +43,36 @@ def swap(str, a, b):
 	temp[a] = y
 	temp[b] = x
 	return ''.join(temp)
-	
-def iterative_depth_first(start, goal):
-	limit = 0
+
+def h(state, goal):
+		sum = 0
+		for current_state_index in range(0, len(state)):
+			final_state_index = goal.find(box)
+			sum += (abs(current_state_index%3 - final_state_index) + 
+						abs(current_state_index - final_state_index))
+		return h
+			
+def astar(start, goal):
+	depth = 0
 	count = 0
 	closed = dict()
-	fringe = [Node(None, start, 0, None)]
+	fringe = [Node(None, start, 0)]
+	temp = None
 	while True:
 		while fringe != []:
-			temp = fringe.pop(-1)
+			temp = fringe.pop(0)
 			if temp.get_state() == goal:
 				print "Number of nodes expanded was: ", count, "\n"
 				return temp
 			if temp.get_state() in closed:
-				if closed[temp.get_state()] == limit:
+				if closed[temp.get_state()] < temp.get_f_n():
 					continue
-			if temp.get_depth() == limit:
-				continue
+				else:
+					closed[temp.get_state()] = temp.get_f_n()
 			else:
-				expansions = expand(temp, limit)
+				expansions = expand(temp, goal)
 				fringe.extend(expansions)
-				closed[temp.get_state()] = temp.get_depth()
+				closed[temp.get_state()] = temp.get_f_n()
 				count += 1
-		limit += 1
-		gc.collect()
-		fringe = [Node(None, start, 0)]
+		depth += 1
+		fringe.append(temp.get_parent())
