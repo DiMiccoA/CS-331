@@ -39,18 +39,19 @@ def swap(str, a, b):
 	return ''.join(temp)
 	
 def depth_first(start, goal):
-	count = 0
 	closed = dict()
 	fringe = [Node(None, start, None, None)]
+	out = []
 	while fringe != []:
 		temp = fringe.pop(-1)
 		if temp.get_state() == goal:
 			print "Number of nodes expanded was: ", len(closed), "\n"
-			return temp
+			out.append(temp)
+			out.append(len(closed))
+			return out
 		if temp.get_state() in closed:
 			continue
 		else:
 			closed[temp.get_state()] = True
 			expansions = expand(temp)
 			fringe.extend(expansions)
-			count += 1

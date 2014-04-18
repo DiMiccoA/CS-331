@@ -26,13 +26,19 @@ def build_state(file):
 
 def print_parents(node, outputfd):
 	states = []
+	moves = 0
 	while node is not None:
 		states.append(node.get_state())
 		node = node.get_parent()
+		moves += 1
 	
 	for state in reversed(states):
 		print_state(state)
 		output_to_file(outputfd, state)
+		
+	moves -= 1 #Subtracts the start node, which isn't a move
+	print 'Number of moves taken to find the goal was: ', moves
+	outputfd.write('Number of moves taken to find the goal was: '+str(moves)+'\n')
 	
 			
 def print_state(state):
@@ -51,15 +57,29 @@ def main(init, final, mode, output):
 	start = build_state(init)
 	goal = build_state(final)
 	outputfd = open(output, 'w')
+	output = []
 	
 	if mode == 'bfs':
-		print_parents(bfs.breadth_first(start, goal), outputfd)
+		output = bfs.breadth_first(start, goal)
+		print_parents(output[0], outputfd)
+		print "Number of nodes expanded was: ", output[1], "\n"
+		outputfd.write("Number of nodes expanded was: "+str(output[1])+"\n")
 	elif mode == 'dfs':
-		print_parents(dfs.depth_first(start, goal), outputfd)
+		output = dfs.depth_first(start, goal)
+		print_parents(output[0], outputfd)
+		print "Number of nodes expanded was: ", output[1], "\n"
+		outputfd.write("Number of nodes expanded was: "+str(output[1])+"\n")
 	elif mode == 'iddfs':
-		print_parents(iddfs.iterative_depth_first(start, goal), outputfd)
+		output = iddfs.iterative_depth_first(start, goal)
+		print_parents(output[0], outputfd)
+		print "Number of nodes expanded was: ", output[1], "\n"
+		outputfd.write("Number of nodes expanded was: "+str(output[1])+"\n")
 	elif mode == 'astar':
-		print_parents(astar.astar(start, goal), outputfd)
+		output = astar.astar(start, goal)
+		print_parents(output[0], outputfd)
+		print "Number of nodes expanded was: ", output[1], "\n"
+		outputfd.write("Number of nodes expanded was: "+str(output[1])+"\n")
+		
 	outputfd.close()
 
 if __name__ == '__main__':

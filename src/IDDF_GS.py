@@ -48,12 +48,15 @@ def iterative_depth_first(start, goal):
 	count = 0
 	closed = dict()
 	fringe = [Node(None, start, 0, None)]
+	out = []
 	while True:
 		while fringe != []:
 			temp = fringe.pop(-1)
 			if temp.get_state() == goal:
 				print "Number of nodes expanded was: ", count, "\n"
-				return temp
+				out.append(temp)
+				out.append(count)
+				return out
 			if temp.get_state() in closed:
 				if closed[temp.get_state()] == limit:
 					continue
@@ -66,4 +69,4 @@ def iterative_depth_first(start, goal):
 				count += 1
 		limit += 1
 		gc.collect()
-		fringe = [Node(None, start, 0)]
+		fringe = [Node(None, start, 0, None)]

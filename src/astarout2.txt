@@ -1,0 +1,22 @@
+1 2 5
+3 0 4
+6 7 8
+- - -
+1 2 5
+3 4 0
+6 7 8
+- - -
+1 2 0
+3 4 5
+6 7 8
+- - -
+1 0 2
+3 4 5
+6 7 8
+- - -
+0 1 2
+3 4 5
+6 7 8
+- - -
+Number of moves taken to find the goal was: 4
+Number of nodes expanded was: 26

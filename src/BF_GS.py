@@ -41,11 +41,14 @@ def swap(str, a, b):
 def breadth_first(start, goal):
 	closed = dict()
 	fringe = [Node(None, start, None, None)]
+	out = []
 	while fringe != []:
 		temp = fringe.pop(0)
 		if temp.get_state() == goal:
 			print "Number of nodes expanded was: ", len(closed), "\n"
-			return temp
+			out.append(temp)
+			out.append(len(closed))
+			return out
 		if temp.get_state() in closed:
 			continue
 		else:

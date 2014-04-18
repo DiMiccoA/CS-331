@@ -58,11 +58,14 @@ def astar(start, goal):
 	closed = dict()
 	fringe = [Node(None, start, 0, 0+h(start, goal))]
 	temp = None
+	out = []
 	while fringe != []:
 		temp = fringe.pop(0)
 		if temp.get_state() == goal:
 			print "Number of nodes expanded was: ", count, "\n"
-			return temp
+			out.append(temp)
+			out.append(count)
+			return out
 		if temp.get_state() in closed:
 			if closed[temp.get_state()] < temp.get_f_n():
 				continue
